@@ -1,6 +1,6 @@
 window.onload = function() {
 
-    function get_joke() {
+    function get_joke(cname) {
         $.ajax({
             url: 'https://api.icndb.com/jokes/random',
             dataType: 'json',
@@ -8,6 +8,7 @@ window.onload = function() {
                 if (json.type == "success") {
                     document.getElementById('seriousgamer').innerHTML = 
                         "<p>\"<i>" + json.value.joke + "</i>\"</p>";
+                    setCookie(cname, json.value.joke, 3);
                 } else {
                     console.log("failed to get joke");
                 }
@@ -48,15 +49,19 @@ window.onload = function() {
 		if (joke4today != "") {
 			//alert("Welcome again " + joke4today);
 			console.log("Your last joke timestamp was: " + joke4today);
+            document.getElementById('seriousgamer').innerHTML =
+                "<p>\"<i>" + joke4today + "</i>\"</p>";
+
 		} else {
 			console.log("Getting a joke ...");
 			//joke4today = prompt("Please enter your name:", "");
-			joke4today = "JOKE @" + new Date();
+			//joke4today = "JOKE @" + new Date();
+			/*
 			if (joke4today != "" && joke4today != null) {
 				setCookie(cookie_name, joke4today, 3); 
 			}
-
-			setTimeout(get_joke(),5000);
+            */
+			setTimeout(get_joke(cookie_name),5000);
 		}
 	}
 
